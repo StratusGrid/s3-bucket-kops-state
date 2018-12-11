@@ -63,8 +63,8 @@ data "aws_iam_policy_document" "bucket_policy_kms" {
       type        = "AWS"
     }
     resources = [
-      "${aws_s3_bucket.bucket.arn}",
-      "${aws_s3_bucket.bucket.arn}/*"
+      "${aws_s3_bucket.bucket_kms.arn}",
+      "${aws_s3_bucket.bucket_kms.arn}/*"
     ]
     sid       = "DenyUnsecuredTransport"
   },
@@ -87,8 +87,8 @@ data "aws_iam_policy_document" "bucket_policy_kms" {
       type        = "AWS"
     }
     resources = [
-      "${aws_s3_bucket.bucket.arn}",
-      "${aws_s3_bucket.bucket.arn}/*"
+      "${aws_s3_bucket.bucket_kms.arn}",
+      "${aws_s3_bucket.bucket_kms.arn}/*"
     ]
     sid       = "DenyIncorrectEncryptionHeader"
   },
@@ -111,8 +111,8 @@ data "aws_iam_policy_document" "bucket_policy_kms" {
       type        = "AWS"
     }
     resources = [
-      "${aws_s3_bucket.bucket.arn}",
-      "${aws_s3_bucket.bucket.arn}/*"
+      "${aws_s3_bucket.bucket_kms.arn}",
+      "${aws_s3_bucket.bucket_kms.arn}/*"
     ]
     sid       = "DenyUnEncryptedObjectUploads"
   }
@@ -121,6 +121,6 @@ data "aws_iam_policy_document" "bucket_policy_kms" {
 resource "aws_s3_bucket_policy" "bucket_policy_mapping_kms" {
   count = "${var.sse_kms}"
 
-  bucket = "${aws_s3_bucket.bucket.id}"
-  policy = "${data.aws_iam_policy_document.bucket_policy.json}"
+  bucket = "${aws_s3_bucket.bucket_kms.id}"
+  policy = "${data.aws_iam_policy_document.bucket_policy_kms.json}"
 }
