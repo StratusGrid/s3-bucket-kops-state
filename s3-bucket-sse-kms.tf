@@ -1,10 +1,12 @@
 resource "aws_kms_key" "key_kms" {
+  count = "${var.sse_kms}"
   description         = "Key for ${var.name_prefix}-kops-state"
   enable_key_rotation = true
   tags = "${var.input_tags}"
 }
 
 resource "aws_kms_alias" "key_alias_kms" {
+  count = "${var.sse_kms}"
   name          = "alias/${var.name_prefix}-kops-state"
   target_key_id = "${aws_kms_key.key_kms.key_id}"
 }
