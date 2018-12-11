@@ -3,7 +3,8 @@ This module configures a bucket with:
  - Server Side Encryption (Not KMS)
  - Requires encrypted transit
  - A randomly generated UID after the name
-
+ 
+ ## Example Usage
 ```
 module "s3_kops_state" {
   source = "https://github.com/StratusGrid/s3-bucket-kops-state"
