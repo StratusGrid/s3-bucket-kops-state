@@ -7,7 +7,7 @@ This module configures a bucket with:
  ## Example Usage:
 ```
 module "s3_kops_state" {
-  source = "https://github.com/StratusGrid/s3-bucket-kops-state"
+  source = "github.com/StratusGrid/s3-bucket-kops-state"
   name_prefix    = "${var.name_prefix}"
   logging_bucket_id  = "${module.s3_bucket_logging.bucket_id}"
   input_tags        = "${local.common_tags}"
