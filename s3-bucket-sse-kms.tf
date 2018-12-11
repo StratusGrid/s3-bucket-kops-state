@@ -1,4 +1,17 @@
-resource "aws_s3_bucket" "bucket" {
+resource "aws_kms_key" "key_kms" {
+  description         = "Key for ${var.name_prefix}-kops-state"
+  enable_key_rotation = true
+  tags = "${var.input_tags}"
+}
+
+resource "aws_kms_alias" "key_alias_kms" {
+  name          = "alias/${var.name_prefix}-kops-state"
+  target_key_id = "${aws_kms_key.key_kms.key_id}"
+}
+
+resource "aws_s3_bucket" "bucket_kms" {
+  count = "${var.sse_kms}"
+
   bucket = "${var.name_prefix}-kops-state-${random_string.unique_bucket_name.result}"
 
   versioning {
@@ -17,7 +30,8 @@ resource "aws_s3_bucket" "bucket" {
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {
-        sse_algorithm     = "AES256"
+        sse_algorithm     = "aws:kms"
+        kms_master_key_id = "${aws_kms_key.key_kms.id}"
       }
     }
   }
@@ -25,7 +39,9 @@ resource "aws_s3_bucket" "bucket" {
   tags = "${var.input_tags}"
 }
 
-data "aws_iam_policy_document" "bucket_policy" {
+data "aws_iam_policy_document" "bucket_policy_kms" {
+  count = "${var.sse_kms}"
+
   statement {
     actions   = [
       "s3:*"
@@ -57,7 +73,7 @@ data "aws_iam_policy_document" "bucket_policy" {
     condition {
       test      = "StringNotEquals"
       values    = [
-        "AES256"
+        "aws:kms"
       ]
       variable  = "s3:x-amz-server-side-encryption"
     }
@@ -100,7 +116,9 @@ data "aws_iam_policy_document" "bucket_policy" {
   }
 }
 
-resource "aws_s3_bucket_policy" "bucket_policy_mapping" {
+resource "aws_s3_bucket_policy" "bucket_policy_mapping_kms" {
+  count = "${var.sse_kms}"
+
   bucket = "${aws_s3_bucket.bucket.id}"
   policy = "${data.aws_iam_policy_document.bucket_policy.json}"
 }

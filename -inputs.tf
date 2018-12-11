@@ -8,6 +8,11 @@ variable "logging_bucket_id" {
   type = "string"
 }
 
+variable "sse_kms" {
+  description = "Boolean to determine whether kms should be used for default bucket encryption"
+  default = false
+}
+
 variable "input_tags" {
   description = "Map of tags to apply to resources"
   type = "map"
