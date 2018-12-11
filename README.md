@@ -8,7 +8,7 @@ This module configures a bucket with:
 ```
 module "s3_kops_state" {
   source = "StratusGrid/s3-bucket-kops-state/aws"
-  version = "1.0.2"
+  version = "1.0.1"
   name_prefix = "${var.name_prefix}"
   logging_bucket_id = "${module.s3_bucket_logging.bucket_id}"
   input_tags = "${local.common_tags}"
