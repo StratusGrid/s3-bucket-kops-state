@@ -4,7 +4,7 @@ This module configures a bucket with:
  - Requires encrypted transit
  - A randomly generated UID after the name
  
- ## Example Usage
+ ## Example Usage:
 ```
 module "s3_kops_state" {
   source = "https://github.com/StratusGrid/s3-bucket-kops-state"
