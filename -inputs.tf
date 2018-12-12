@@ -13,6 +13,13 @@ variable "sse_kms" {
   default = false
 }
 
+variable "cross_account_trusted_account_arns" {
+  description = "List of accounts to be trusted with cross account read access to bucket for masters and nodes - NOT enough for cluster creation/changes."
+  type = "list"
+  default = []
+}
+
+
 variable "input_tags" {
   description = "Map of tags to apply to resources"
   type = "map"

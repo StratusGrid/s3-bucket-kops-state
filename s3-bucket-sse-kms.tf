@@ -46,6 +46,35 @@ data "aws_iam_policy_document" "bucket_policy_kms" {
 
   statement {
     actions   = [
+      "s3:GetBucketLocation",
+      "s3:ListBucket"
+    ]
+    effect    = "Allow"
+    principals {
+      identifiers = "${var.cross_account_trusted_account_arns}"
+      type        = "AWS"
+    }
+    resources = [
+      "${aws_s3_bucket.bucket_kms.arn}"
+    ]
+    sid       = "CrossAccountTrustingRoot"
+  },
+  statement {
+    actions   = [
+      "s3:Get*"
+    ]
+    effect    = "Allow"
+    principals {
+      identifiers = "${var.cross_account_trusted_account_arns}"
+      type        = "AWS"
+    }
+    resources = [
+      "${aws_s3_bucket.bucket_kms.arn}/*"
+    ]
+    sid       = "CrossAccountTrustingKeys"
+  },
+  statement {
+    actions   = [
       "s3:*"
     ]
     condition {
