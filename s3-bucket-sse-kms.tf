@@ -96,54 +96,6 @@ data "aws_iam_policy_document" "bucket_policy_kms" {
       "${aws_s3_bucket.bucket_kms.arn}/*"
     ]
     sid       = "DenyUnsecuredTransport"
-  },
-  statement {
-    actions   = [
-      "s3:PutObject"
-    ]
-    condition {
-      test      = "StringNotEquals"
-      values    = [
-        "aws:kms"
-      ]
-      variable  = "s3:x-amz-server-side-encryption"
-    }
-    effect    = "Deny"
-    principals {
-      identifiers = [
-        "*"
-      ]
-      type        = "AWS"
-    }
-    resources = [
-      "${aws_s3_bucket.bucket_kms.arn}",
-      "${aws_s3_bucket.bucket_kms.arn}/*"
-    ]
-    sid       = "DenyIncorrectEncryptionHeader"
-  },
-  statement {
-    actions   = [
-      "s3:PutObject"
-    ]
-    condition {
-      test      = "Null"
-      values    = [
-        "true"
-      ]
-      variable  = "s3:x-amz-server-side-encryption"
-    }
-    effect    = "Deny"
-    principals {
-      identifiers = [
-        "*"
-      ]
-      type        = "AWS"
-    }
-    resources = [
-      "${aws_s3_bucket.bucket_kms.arn}",
-      "${aws_s3_bucket.bucket_kms.arn}/*"
-    ]
-    sid       = "DenyUnEncryptedObjectUploads"
   }
 }
 
