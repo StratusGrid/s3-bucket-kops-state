@@ -4,8 +4,9 @@ This module configures a bucket with:
  - Requires encrypted transit
  - A randomly generated UID after the name
  - Optional cross account trust for using this state bucket in a centralized account with other accounts storing/retrieving state from it.
+ - Optional cross account read only option for using this state bucket in a centralized account with other accounts storing/retrieving state from it.
    - If you wanted to have different customers/security levels share the bucket, you would need to restructure the cross account trusting policies to map accounts to specific keys for different clusters or similar, and even then I would NOT recommend doing this (since they could still list the bucket and see names of the other clusters, even if they couldn't access them).
-   - This assumes you are using separate access credentials for S3 than kops provisioning. See this thread for more details: https://github.com/kubernetes/kops/issues/353#issuecomment-446837838
+   - The read only option assumes you are using separate access credentials for S3 than kops provisioning. See this thread for more details: https://github.com/kubernetes/kops/issues/353#issuecomment-446837838
  
  ## Example Usage:
 ```

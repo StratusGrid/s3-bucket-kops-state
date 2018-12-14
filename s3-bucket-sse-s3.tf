@@ -37,11 +37,11 @@ data "aws_iam_policy_document" "bucket_policy" {
     ]
     effect    = "Allow"
     principals {
-      identifiers = "${var.cross_account_trusted_account_arns}"
+      identifiers = "${concat(var.cross_account_trusted_ro_account_arns, cross_account_trusted_rw_account_arns)}"
       type        = "AWS"
     }
     resources = [
-      "${aws_s3_bucket.bucket.arn}"
+      "${aws_s3_bucket.bucket_kms.arn}"
     ]
     sid       = "CrossAccountTrustingRoot"
   },
@@ -51,13 +51,27 @@ data "aws_iam_policy_document" "bucket_policy" {
     ]
     effect    = "Allow"
     principals {
-      identifiers = "${var.cross_account_trusted_account_arns}"
+      identifiers = "${concat(var.cross_account_trusted_ro_account_arns, cross_account_trusted_rw_account_arns)}"
       type        = "AWS"
     }
     resources = [
-      "${aws_s3_bucket.bucket.arn}/*"
+      "${aws_s3_bucket.bucket_kms.arn}/*"
     ]
-    sid       = "CrossAccountTrustingKeys"
+    sid       = "CrossAccountTrustingReadKeys"
+  },
+  statement {
+    actions   = [
+      "s3:Put*"
+    ]
+    effect    = "Allow"
+    principals {
+      identifiers = "${cross_account_trusted_rw_account_arns}"
+      type        = "AWS"
+    }
+    resources = [
+      "${aws_s3_bucket.bucket_kms.arn}/*"
+    ]
+    sid       = "CrossAccountTrustingWriteKeys"
   },
   statement {
     actions   = [
