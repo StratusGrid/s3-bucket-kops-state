@@ -17,6 +17,6 @@ module "s3_kops_state" {
   logging_bucket_id = "${module.s3_bucket_logging.bucket_id}"
   input_tags = "${local.common_tags}"
   sse_kms = true
-  cross_account_trusted_account_arns = ["arn:aws:iam::123456789:root"]
+  cross_account_trusted_rw_account_arns = ["arn:aws:iam::123456789:root"]
 }
 ```
