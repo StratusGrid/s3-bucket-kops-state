@@ -51,7 +51,7 @@ data "aws_iam_policy_document" "bucket_policy_kms" {
     ]
     effect    = "Allow"
     principals {
-      identifiers = "${concat(var.cross_account_trusted_ro_account_arns, cross_account_trusted_rw_account_arns)}"
+      identifiers = "${concat(var.cross_account_trusted_ro_account_arns, var.cross_account_trusted_rw_account_arns)}"
       type        = "AWS"
     }
     resources = [
@@ -65,7 +65,7 @@ data "aws_iam_policy_document" "bucket_policy_kms" {
     ]
     effect    = "Allow"
     principals {
-      identifiers = "${concat(var.cross_account_trusted_ro_account_arns, cross_account_trusted_rw_account_arns)}"
+      identifiers = "${concat(var.cross_account_trusted_ro_account_arns, var.cross_account_trusted_rw_account_arns)}"
       type        = "AWS"
     }
     resources = [
@@ -79,7 +79,7 @@ data "aws_iam_policy_document" "bucket_policy_kms" {
     ]
     effect    = "Allow"
     principals {
-      identifiers = "${cross_account_trusted_rw_account_arns}"
+      identifiers = "${var.cross_account_trusted_rw_account_arns}"
       type        = "AWS"
     }
     resources = [
