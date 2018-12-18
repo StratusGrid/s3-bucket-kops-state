@@ -110,30 +110,6 @@ data "aws_iam_policy_document" "bucket_policy_kms" {
       "${aws_s3_bucket.bucket_kms.arn}/*"
     ]
     sid       = "DenyUnsecuredTransport"
-  },
-  statement {
-    actions   = [
-      "s3:PutObject"
-    ]
-    condition {
-      test      = "StringEquals"
-      values    = [
-        "bucket-owner-full-control"
-      ]
-      variable  = "s3:x-amz-acl"
-    }
-    effect    = "Deny"
-    principals {
-      identifiers = [
-        "*"
-      ]
-      type        = "AWS"
-    }
-    resources = [
-      "${aws_s3_bucket.bucket_kms.arn}",
-      "${aws_s3_bucket.bucket_kms.arn}/*"
-    ]
-    sid       = "RequireBucketOwnerACL"
   }
 }
 
