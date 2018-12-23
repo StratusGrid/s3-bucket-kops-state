@@ -41,7 +41,7 @@ data "aws_iam_policy_document" "bucket_policy" {
       type        = "AWS"
     }
     resources = [
-      "${aws_s3_bucket.bucket_kms.arn}"
+      "${aws_s3_bucket.bucket.arn}"
     ]
     sid       = "CrossAccountTrustingRoot"
   },
@@ -55,7 +55,7 @@ data "aws_iam_policy_document" "bucket_policy" {
       type        = "AWS"
     }
     resources = [
-      "${aws_s3_bucket.bucket_kms.arn}/*"
+      "${aws_s3_bucket.bucket.arn}/*"
     ]
     sid       = "CrossAccountTrustingReadKeys"
   },
@@ -69,7 +69,7 @@ data "aws_iam_policy_document" "bucket_policy" {
       type        = "AWS"
     }
     resources = [
-      "${aws_s3_bucket.bucket_kms.arn}/*"
+      "${aws_s3_bucket.bucket.arn}/*"
     ]
     sid       = "CrossAccountTrustingWriteKeys"
   },
