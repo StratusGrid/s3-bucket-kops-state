@@ -13,7 +13,7 @@ resource "aws_s3_bucket" "bucket" {
 
   logging {
     target_bucket = "${var.logging_bucket_id}"
-    target_prefix = "${var.name_prefix}-kops-state-${random_string.unique_bucket_name.result}/"
+    target_prefix = "s3/${var.name_prefix}-kops-state-${random_string.unique_bucket_name.result}/"
   }
 
   server_side_encryption_configuration {
