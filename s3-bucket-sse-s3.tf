@@ -1,7 +1,7 @@
 resource "aws_s3_bucket" "bucket" {
   count = "${1 - var.sse_kms}"
 
-  bucket = "${var.name_prefix}-kops-state-${random_string.unique_bucket_name.result}"
+  bucket = "${var.name_prefix}-kops-state${var.name_suffix}"
 
   versioning {
     enabled = true
@@ -13,7 +13,7 @@ resource "aws_s3_bucket" "bucket" {
 
   logging {
     target_bucket = "${var.logging_bucket_id}"
-    target_prefix = "s3/${var.name_prefix}-kops-state-${random_string.unique_bucket_name.result}/"
+    target_prefix = "s3/${var.name_prefix}-kops-state${var.name_suffix}/"
   }
 
   server_side_encryption_configuration {

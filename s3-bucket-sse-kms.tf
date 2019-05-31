@@ -1,20 +1,20 @@
 resource "aws_kms_key" "key_kms" {
   count = "${var.sse_kms}"
-  description         = "Key for ${var.name_prefix}-kops-state"
+  description         = "Key for ${var.name_prefix}-kops-state${var.name_suffix}"
   enable_key_rotation = true
   tags = "${var.input_tags}"
 }
 
 resource "aws_kms_alias" "key_alias_kms" {
   count = "${var.sse_kms}"
-  name          = "alias/${var.name_prefix}-kops-state"
+  name          = "alias/${var.name_prefix}-kops-state${var.name_suffix}"
   target_key_id = "${aws_kms_key.key_kms.key_id}"
 }
 
 resource "aws_s3_bucket" "bucket_kms" {
   count = "${var.sse_kms}"
 
-  bucket = "${var.name_prefix}-kops-state-${random_string.unique_bucket_name.result}"
+  bucket = "${var.name_prefix}-kops-state${var.name_suffix}"
 
   versioning {
     enabled = true
@@ -26,7 +26,7 @@ resource "aws_s3_bucket" "bucket_kms" {
 
   logging {
     target_bucket = "${var.logging_bucket_id}"
-    target_prefix = "s3/${var.name_prefix}-kops-state-${random_string.unique_bucket_name.result}/"
+    target_prefix = "s3/${var.name_prefix}-kops-state${var.name_suffix}/"
   }
 
   server_side_encryption_configuration {

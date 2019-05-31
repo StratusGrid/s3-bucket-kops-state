@@ -2,7 +2,6 @@
 This module configures a bucket with:
  - SSE-S3 unless SSE-KMS is specified (KMS will incur an additional charge) 
  - Requires encrypted transit
- - A randomly generated UID after the name
  - Optional cross account trust for using this state bucket in a centralized account with other accounts storing/retrieving state from it.
    - When using cross account permissions, you will usually want to force 'bucket-owner-full-control' ACL on all objects (otherwise the bucket owner may not be able to see them). This can be done by running this command before running kops: 
 ```
