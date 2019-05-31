@@ -23,3 +23,4 @@ module "s3_kops_state" {
   cross_account_trusted_rw_account_arns = ["arn:aws:iam::123456789:root"]
 }
 ```
+NOTE: If only using within the applied account, you can set the cross_account_trusted_rw_account_arns like so: ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"]
