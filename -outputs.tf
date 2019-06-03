@@ -9,9 +9,9 @@ output "bucket_id" {
 }
 
 output "kms_key_alias_arn" {
-  value = "${aws_kms_alias.key_alias_kms.arn}"
+  value = "${aws_kms_alias.key_alias_kms.0.arn}"
 }
 
 output "kms_key_arn" {
-  value = "${aws_kms_key.key_kms.arn}"
+  value = "${aws_kms_key.key_kms.0.arn}"
 }
