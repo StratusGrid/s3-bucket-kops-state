@@ -1,3 +1,5 @@
+header-from: ./.config/header.md
+
 version: ""
 
 formatter: markdown table
@@ -5,6 +7,8 @@ formatter: markdown table
 name: terraform-aws-s3-bucket-kops-state
 
 content: |-
+  {{ .Header }}
+
   # terraform-aws-s3-bucket-kops-state
 
   GitHub: [StratusGrid/terraform-aws-s3-bucket-kops-state](https://github.com/StratusGrid/terraform-aws-s3-bucket-kops-state)
@@ -44,6 +48,7 @@ content: |-
 
 sections:
   show:
+    - header
     - resources
     - inputs
     - outputs
